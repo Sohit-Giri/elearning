@@ -133,7 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 # Static files (CSS, JavaScript, images)
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # Define the location of static files in the production environment
 STATICFILES_DIRS = [
@@ -146,8 +146,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files (uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 # Ensure this is set for serving media files in development
 if DEBUG:
