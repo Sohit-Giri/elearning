@@ -93,7 +93,7 @@ DATABASES = {
     }
 }
 
-# DATABASES["default"] = dj_database_url.parse("postgresql://elearning_by_sohit_user:EqGMRUGDYvBBr3dZ9amztJzsfJZAoIj8@dpg-cs495v5svqrc7387je90-a.oregon-postgres.render.com/elearning_by_sohit")
+DATABASES["default"] = dj_database_url.parse("postgresql://elearning_by_sohit_user:EqGMRUGDYvBBr3dZ9amztJzsfJZAoIj8@dpg-cs495v5svqrc7387je90-a.oregon-postgres.render.com/elearning_by_sohit")
 # postgresql://elearning_by_sohit_user:EqGMRUGDYvBBr3dZ9amztJzsfJZAoIj8@dpg-cs495v5svqrc7387je90-a.oregon-postgres.render.com/elearning_by_sohit
 
 # Password validation
