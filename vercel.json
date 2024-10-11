@@ -5,6 +5,10 @@
     ],
     "routes": [
       { "src": "/(.*)", "dest": "elearning/wsgi.py" }
-    ]
+    ],
+    "static": {
+      "src": "static/**/*",
+      "dest": "/static"
+    }
   }
   
