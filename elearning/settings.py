@@ -160,20 +160,20 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'django_debug.log',
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
+            'handlers': ['console'],
+            'level': 'ERROR',
             'propagate': True,
         },
     },
 }
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
