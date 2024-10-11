@@ -1,0 +1,115 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<style>
+    .course-detail-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .course-detail-container h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .course-detail-container p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #5865f2;
+        position: relative;
+        text-align: center;
+    }
+
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background-color: #ff7f00;
+        margin: 10px auto 0;
+    }
+
+    .resource-list,
+    .quiz-list,
+    .forum-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .resource-list li,
+    .quiz-list li,
+    .forum-list li {
+        background: #f9f9f9;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .resource-list li:hover,
+    .quiz-list li:hover,
+    .forum-list li:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .resource-list li a,
+    .quiz-list li a,
+    .forum-list li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        display: block;
+    }
+</style>
+
+<div class="course-detail-container">
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+
+    <h2 class="section-title">Resources</h2>
+    <ul class="resource-list">
+        {% if resources %}
+            {% for resource in resources %}
+                <li><a href="{{ resource.url }}">{{ resource.title }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>No resources available.</li>
+        {% endif %}
+    </ul>
+
+    <h2 class="section-title">Quizzes</h2>
+    <ul class="quiz-list">
+        {% if quizzes %}
+            {% for quiz in quizzes %}
+                <li><a href="{{ quiz.url }}">{{ quiz.title }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>No quizzes available.</li>
+        {% endif %}
+    </ul>
+
+    <h2 class="section-title">Forums</h2>
+    <ul class="forum-list">
+        {% if forums %}
+            {% for forum in forums %}
+                <li><a href="{{ forum.url }}">{{ forum.title }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>No forums available.</li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

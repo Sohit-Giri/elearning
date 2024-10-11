@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - Himalayan E-Learning Platform{% endblock %}
+
+{% block content %}
+<style>
+    .show-password-container {
+        display: table;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .show-password-container input[type="checkbox"] {
+        display: table-cell;
+        margin-right: 5px;
+        transform: scale(1);
+        vertical-align: middle;
+    }
+    .show-password-label {
+        display: table-cell;
+        vertical-align: middle;
+        margin: 0;
+    }
+    .form-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .login-signup-background {
+        background-image: url("{% static 'images/hlm2.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<div class="login-signup-background">
+    <div class="form-container">
+        <h2>Login</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.username.label_tag }} {{ form.username }}
+            {{ form.password.label_tag }} {{ form.password }}
+            <div class="show-password-container">
+                <input type="checkbox" id="show-password" onclick="togglePasswordVisibility()">
+                <label for="show-password" class="show-password-label">Show Password</label>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up Now</a></p>
+    </div>
+</div>
+<script>
+    function togglePasswordVisibility() {
+        var passwordField = document.querySelector('input[name="password"]');
+        passwordField.type = (passwordField.type === "password") ? "text" : "password";
+    }
+</script>
+{% endblock %}

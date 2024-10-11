@@ -1,0 +1,15 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Payment Screenshots</h2>
+  <ul>
+    {% for screenshot in screenshots %}
+      <li>
+        <p>User: {{ screenshot.user.username }}</p>
+        <p>Course: {{ screenshot.course.title }}</p>
+        <img src="{{ screenshot.screenshot.url }}" alt="Payment Screenshot" style="width: 200px; height: 200px;">
+        <p>Uploaded at: {{ screenshot.uploaded_at }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

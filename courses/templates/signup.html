@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - Himalayan E-Learning Platform{% endblock %}
+
+{% block content %}
+<style>
+    .show-password-container {
+        display: table;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .show-password-container input[type="checkbox"] {
+        display: table-cell;
+        margin-right: 5px;
+        transform: scale(1);
+        vertical-align: middle;
+    }
+    .show-password-label {
+        display: table-cell;
+        vertical-align: middle;
+        margin: 0;
+    }
+    .form-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .login-signup-background {
+        background-image: url("{% static 'images/hlm2.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .errorlist {
+        color: red;
+        margin-top: 10px;
+    }
+</style>
+<div class="login-signup-background">
+    <div class="form-container">
+        <h2>Sign Up</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+            <div>
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+                {{ form.first_name.errors }}
+            </div>
+            <div>
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+                {{ form.last_name.errors }}
+            </div>
+            <div>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+            <div>
+                {{ form.mobile_number.label_tag }}
+                {{ form.mobile_number }}
+                {{ form.mobile_number.errors }}
+            </div>
+            <div>
+                {{ form.profile_photo.label_tag }}
+                {{ form.profile_photo }}
+                {{ form.profile_photo.errors }}
+            </div>
+            <div>
+                {{ form.password1.label_tag }}
+                <input type="password" name="{{ form.password1.name }}" class="password-field" id="id_password1">
+                {{ form.password1.errors }}
+            </div>
+            <div>
+                {{ form.password2.label_tag }}
+                <input type="password" name="{{ form.password2.name }}" class="password-field" id="id_password2">
+                {{ form.password2.errors }}
+            </div>
+            <div class="show-password-container">
+                <input type="checkbox" id="show-password" onclick="togglePasswordVisibility()">
+                <label for="show-password" class="show-password-label">Show Password</label>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+</div>
+<script>
+    function togglePasswordVisibility() {
+        var passwordFields = document.querySelectorAll('.password-field');
+        passwordFields.forEach(field => {
+            field.type = (field.type === "password") ? "text" : "password";
+        });
+    }
+</script>
+{% endblock %}

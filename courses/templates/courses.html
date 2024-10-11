@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Courses - Himalayan E-Learning Platform{% endblock %}
+
+{% block content %}
+<style>
+    .box {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .animated-section {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animated-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .animated-text {
+        animation: fadeInUp 1s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .course-item, .category-card {
+        overflow: hidden;
+    }
+
+    .btn-primary, .btn-secondary {
+        display: inline-block;
+        margin: 10px 0;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #fff;
+        background-color: #1e90ff;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-primary::before, .btn-secondary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, #00fffc, transparent);
+        transition: transform 0.6s ease;
+        transform: translateX(-100%);
+    }
+
+    .btn-primary:hover::before, .btn-secondary:hover::before {
+        transform: translateX(100%);
+    }
+
+    .btn-primary:hover, .btn-secondary:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 20px 5px #00fffc;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 50px;
+        position: relative;
+        color: #fff;
+        background: linear-gradient(to right, #005f73, #0a9396);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background-color: #ff7f00;
+        margin: 20px auto 0;
+    }
+
+    .course-categories {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+
+    .category-card {
+        flex: 1;
+        min-width: 200px;
+        max-width: 300px;
+        margin: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .category-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .category-info {
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .course-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .course-item img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .course-content {
+        padding: 10px;
+    }
+</style>
+
+<div class="courses-container">
+    <h2 class="section-title">Courses</h2>
+    <div class="course-categories">
+        <div class="category-card box">
+            <a href="#free-courses">
+                <img src="{% static 'images/cat-3.jpg' %}" alt="Free Courses">
+                <div class="category-info">
+                    <h3>Free Courses</h3>
+                    <p>Explore our range of free courses to get started.</p>
+                </div>
+            </a>
+        </div>
+        <div class="category-card box">
+            <a href="#paid-courses">
+                <img src="{% static 'images/cat-2.jpg' %}" alt="Paid Courses">
+                <div class="category-info">
+                    <h3>Paid Courses</h3>
+                    <p>Access premium content with our paid courses.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<section id="free-courses" class="free-courses animated-section box">
+    <h3 class="section-title">Free Courses</h3>
+    <div class="course-list">
+        {% for course in courses %}
+            {% if course.is_free %}
+                <div class="course-item box">
+                    <div class="course-image">
+                        <img src="{% static 'images/course-1.jpg' %}" alt="{{ course.title }}">
+                    </div>
+                    <div class="course-content">
+                        <h4>$0.00</h4>
+                        <h5>{{ course.title }}</h5>
+                        <div class="course-meta">
+                            <span><i class="fa fa-user-tie"></i> {{ course.instructor }}</span>
+                            <span><i class="fa fa-clock"></i> {{ course.duration }}</span>
+                            <span><i class="fa fa-user"></i> {{ course.students.count }} Students</span>
+                        </div>
+                        <div class="course-buttons">
+                            {% if course.id in enrolled_courses %}
+                                <a href="{% url 'course_detail' course.id %}" class="btn-primary">Start</a>
+                            {% else %}
+                                <a href="{% url 'enroll_in_course' course.id %}" class="btn-primary" onclick="return confirmEnrollment(event, this, true);">Join For Free</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+
+<section id="paid-courses" class="paid-courses animated-section box">
+    <h3 class="section-title">Paid Courses</h3>
+    <div class="course-list">
+        {% for course in courses %}
+            {% if not course.is_free %}
+                <div class="course-item box">
+                    <div class="course-image">
+                        <img src="{% static 'images/course-2.jpg' %}" alt="{{ course.title }}">
+                    </div>
+                    <div class="course-content">
+                        <h4>${{ course.price }}</h4>
+                        <h5>{{ course.title }}</h5>
+                        <div class="course-meta">
+                            <span><i class="fa fa-user-tie"></i> {{ course.instructor }}</span>
+                            <span><i class="fa fa-clock"></i> {{ course.duration }}</span>
+                            <span><i class="fa fa-user"></i> {{ course.students.count }} Students</span>
+                        </div>
+                        <div class="course-buttons">
+                            {% if course.id in enrolled_courses %}
+                                <a href="{% url 'course_detail' course.id %}" class="btn-primary">Start</a>
+                            {% else %}
+                                <a href="{% url 'enroll_in_course' course.id %}" class="btn-primary" onclick="return confirmEnrollment(event, this, false);">Join Now</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+</div>
+
+<script>
+    function confirmEnrollment(event, element, isFree) {
+        event.preventDefault();
+        const userConfirmed = confirm("Are you sure you want to enroll in this course?");
+        if (userConfirmed) {
+            window.location.href = element.href;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const sections = document.querySelectorAll('.animated-section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
+</script>
+{% endblock %}

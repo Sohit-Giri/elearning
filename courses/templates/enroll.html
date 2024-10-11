@@ -1,0 +1,67 @@
+<!-- myapp/templates/enroll.html -->
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}Enroll in {{ course.title }}{% endblock %}
+
+{% block content %}
+<style>
+    .qr-container {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .qr-container img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .qr-container p {
+        font-size: 1.2em;
+        margin-top: 10px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    form input[type="file"] {
+        margin-bottom: 20px;
+    }
+
+    form button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 1em;
+    }
+
+    form button:hover {
+        background-color: #45a049;
+    }
+    p{
+        text-align: center;
+    }
+</style>
+
+<h2>Enroll in {{ course.title }}</h2>
+<div class="qr-container">
+    <img src="{% static 'images/payment_qr.png' %}" alt="Payment QR Code">
+</div>
+<p>Please pay the course fee by scanning the QR code and submitting the payment screenshot above:</p>
+<p>After submitting the screenshot, you will receive an email update within 24 hours as you will be enrolled.</p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="screenshot">Upload Payment Screenshot:</label>
+    <input type="file" id="screenshot" name="screenshot">
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
