@@ -49,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this line
 ]
 
 ROOT_URLCONF = "elearning.urls"
@@ -131,17 +132,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, images)
 STATIC_URL = '/static/'
+
+# Define the location of static files in the production environment
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    os.path.join(BASE_DIR, 'static'),
 ]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# For production, collect static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Use WhiteNoise for serving static files in production (important for Vercel)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files (Uploaded files)
+# Media files (uploads)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'courses/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Ensure this is set for serving media files in development
 if DEBUG:

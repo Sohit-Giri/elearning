@@ -1,11 +1,20 @@
 {
     "version": 2,
     "builds": [
-      { "src": "elearning/wsgi.py", "use": "@vercel/python" }
+      {
+        "src": "elearning/wsgi.py",
+        "use": "@vercel/python"
+      }
     ],
     "routes": [
-      { "src": "/static/(.*)", "dest": "/static/$1" },
-      { "src": "/(.*)", "dest": "elearning/wsgi.py" }
+      {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/elearning/wsgi.py"
+      }
     ]
   }
   
